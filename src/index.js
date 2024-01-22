@@ -4,10 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import MyContextProvider from './Context/MyContextProvider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <MyContextProvider>
+      <App />
+    </MyContextProvider>
   </React.StrictMode>
 );
 

@@ -1,0 +1,14 @@
+.table-container{
+    background-color: #f6f5f5;
+    padding: .5em;
+    border-radius: 1em;
+    text-align: center;
+}
+.table-name{
+    padding-bottom: .2em;
+}
+.table{
+    /* border: 1px solid black; */
+    text-align: left;
+    margin-top: 0.5em
+}

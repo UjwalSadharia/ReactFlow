@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "name": "Users",
+      "fields": [
+        { "id": 1, "name": "UserID", "type": "INT" },
+        { "id": 2, "name": "UserName", "type": "VARCHAR" },
+        { "id": 3, "name": "Email", "type": "VARCHAR" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Orders",
+      "fields": [
+        { "id": 4, "name": "OrderID", "type": "INT" },
+        { "id": 5, "name": "ProductID", "type": "INT" },
+        { "id": 6, "name": "Quantity", "type": "INT" }
+      ]
+    }
+  ]
+  
+
