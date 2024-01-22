@@ -1,8 +1,8 @@
 import { useCallback, useState, useContext, useEffect } from "react";
 import { Handle, Position } from "reactflow";
 import './Customnode.css';
-import { Button, Modal, Form, Input, Select } from 'antd'
-import { PlusCircleFilled } from '@ant-design/icons'
+import { Button, Modal, Form, Input, Select, Drawer, Checkbox } from 'antd'
+import { DeleteOutlined, PlusCircleFilled } from '@ant-design/icons'
 import MyContext from "../Context/MyContext";
 import _ from 'lodash';
 
@@ -10,7 +10,10 @@ const CustomNode = ({ id, data, isConnectable }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [fieldName, setFieldName] = useState('');
+    const [tableName, setTableName] = useState('');
+    const [drawerTable, setDrawerTable] = useState([]);
     const [datatype, setDatatype] = useState('');
+    const [open, setOpen] = useState(false);
 
     const { initialNodes, setInitialNodes } = useContext(MyContext);
     const { Option } = Select;
@@ -41,6 +44,18 @@ const CustomNode = ({ id, data, isConnectable }) => {
         setIsModalOpen(false);
     };
 
+    const showDrawer = (id) => {
+        const data = initialNodes.find((elem) => elem.id === id)
+        setTableName(data?.data.tableName);
+        setDrawerTable(data);
+        setOpen(true);
+
+        console.log(data);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+
     const onTypeChange = (value) => {
         switch (value) {
             case 'int':
@@ -60,9 +75,75 @@ const CustomNode = ({ id, data, isConnectable }) => {
         setFieldName(e.target.value);
     };
 
+    function handleDrawerForm() {
+        console.log("Drawer From");
+    }
+    const onChange = (e) => {
+        console.log(`checked = ${e.target.checked} and ${e.target.value}`);
+    };
 
     return (
-        <div className="table-container">
+        <div className="table-container" onDoubleClick={() => showDrawer(id)}>
+            <Drawer title={tableName != '' ? tableName : 'Tabel Name'} onClose={onClose} open={open}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column Name</th>
+                            <th>Datatype</th>
+                            <th>PK</th>
+                            <th>NN</th>
+                            <th>UQ</th>
+                            <th>Act</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            drawerTable?.data?.fields.map((elem) => {
+                                return <tr>
+                                    <td>{elem.name}</td>
+                                    <td>{elem.type}</td>
+                                    <td><Checkbox onChange={onChange} value="pk"></Checkbox></td>
+                                    <td><Checkbox onChange={onChange} value="nn"></Checkbox></td>
+                                    <td><Checkbox onChange={onChange} value="uq"></Checkbox></td>
+                                    <td><DeleteOutlined onClick={() => { }} /></td>
+                                </tr>
+                            })
+                        }
+
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column Name</th>
+                            <th>Datatype</th>
+                            <th>PK</th>
+                            <th>NN</th>
+                            <th>UQ</th>
+                            <th>Act</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><Input onChange={handleInputChange} /></td>
+                            <td><Select
+                                placeholder="Select a option and change input text above"
+                                onChange={onTypeChange}
+                                allowClear
+                            >
+                                <Option value="int">Int</Option>
+                                <Option value="varchar">Varchar</Option>
+                                <Option value="boolean">Boolean</Option>
+                            </Select></td>
+                            <td><Checkbox onChange={onChange} value="pk"></Checkbox></td>
+                            <td><Checkbox onChange={onChange} value="nn"></Checkbox></td>
+                            <td><Checkbox onChange={onChange} value="uq"></Checkbox></td>
+                            <td><DeleteOutlined onClick={() => { }} /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <PlusCircleFilled onClick={handleDrawerForm} style={{ fontSize: 20, paddingTop: 10, color: '#1677ff' }} />
+            </Drawer>
             <span className="table-name">{data.tableName}</span>
             <div >
                 <div >
@@ -90,14 +171,14 @@ const CustomNode = ({ id, data, isConnectable }) => {
                     <Form.Item
                         name="note"
                         label="FieldName"
-                       
+
                     >
                         <Input onChange={handleInputChange} />
                     </Form.Item>
                     <Form.Item
                         name="datatype"
                         label="Datatype"
-                        
+
                     >
                         <Select
                             placeholder="Select a option and change input text above"
@@ -109,7 +190,7 @@ const CustomNode = ({ id, data, isConnectable }) => {
                             <Option value="boolean">Boolean</Option>
                         </Select>
                     </Form.Item>
-                        <button value={id} onClick={handleOk}>Add</button>
+                    <button value={id} onClick={handleOk}>Add</button>
                 </Modal>
                 <PlusCircleFilled onClick={showModal} />
             </div>

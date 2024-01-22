@@ -12,3 +12,21 @@
     text-align: left;
     margin-top: 0.5em
 }
+.ant-drawer-content-wrapper{
+    width: 60% !important;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+   
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }

@@ -33,9 +33,13 @@ const MyContextProvider = ({ children }) => {
     }
   ]);
 
+  const [showTableDrawer, setShowTableDrawer] = useState(false);
+
   const contextValue = {
     initialNodes,
     setInitialNodes,
+    showTableDrawer,
+    setShowTableDrawer
   };
 
   return (
